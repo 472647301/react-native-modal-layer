@@ -38,6 +38,8 @@ export default class ModalLayer extends React.Component<ModalLayerProps> {
     contentComponent: null
   };
 
+  width?:number;
+
   isAction = false;
 
   contentComponent: ModalLayerShowOptions['component'];
@@ -113,10 +115,10 @@ export default class ModalLayer extends React.Component<ModalLayerProps> {
     });
 
     return (
-      <View style={[styles.view, {left: state.isShow ? 0 : 9999}]}>
+      <View style={[styles.view, {left: state.isShow ? 0 : 9999}, this.width ? {width: this.width } : undefined]}>
     <View style={styles.container}>
     {shade ? <TouchableWithoutFeedback onPress={shadePress || (() => this.keyboardIsShow ? Keyboard.dismiss() : this.mlc.hide())}>
-    <Animated.View style={[styles.fixedBg, {opacity: opacity}]}>
+    <Animated.View style={[styles.fixedBg, {opacity: opacity}, this.width ? {width: this.width } : undefined]}>
 
     </Animated.View>
     </TouchableWithoutFeedback> : null}
@@ -133,10 +135,11 @@ export default class ModalLayer extends React.Component<ModalLayerProps> {
     this.setState({}, callback)
   }
 
-  show(options: ModalLayerShowOptions = {component: null, boxStyle: {}, act: ModalLayerAnimated.SCALE}) {
+  show(options: ModalLayerShowOptions = {component: null, boxStyle: {}, act: ModalLayerAnimated.SCALE},width?:number) {
     this.contentComponent = options.component;
     this.boxStyle = options.boxStyle;
     this.transform = options.act(this.state.showAnimated);
+    this.width = width
     // this.setState({
     //   contentComponent: options.component,
     //   boxStyle: options.boxStyle,

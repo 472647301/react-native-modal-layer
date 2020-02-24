@@ -12,6 +12,7 @@ export interface ModalControllerSetOptions {
   hideDuration?: number
   key?: string
   backHandle?: (event: GestureResponderEvent) => boolean
+  width?:number
 }
 
 export interface ModalControllerOptions extends ModalControllerSetOptions {
@@ -58,7 +59,7 @@ export default class ModalLayerController {
       component: this.getComponent(...args),
       boxStyle,
       act
-    }).then(() => this.didShow());
+    }, this.options.width).then(() => this.didShow());
     this.onShow();
   }
 
